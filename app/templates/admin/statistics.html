@@ -1,0 +1,22 @@
+{% extends './base.html' %} {% block content %}
+<div class="admin-page dashboard-page flex justify-center bg-gray-200">
+  <div class="py-6">
+    <h1 class="text-2xl font-bold text-center">
+      List of importing markets for the product exported by Switzerland in 2022
+      <br />
+      Product: 9305 Parts and accessories for weapons and the like of heading
+      9301 to 9304
+    </h1>
+
+    {% for plot_url in plot_urls %}
+    <div class="px-8 py-6 mt-4 text-left bg-white">
+      <div class="container mx-auto divide-y divide-gray-400 divide-dotted">
+        <div class="flex justify-center">
+          <img src="{{ url_for('static', filename=plot_url) }}" alt="Chart" />
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

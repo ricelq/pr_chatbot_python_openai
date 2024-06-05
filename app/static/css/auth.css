@@ -1,0 +1,7 @@
+.auth-page form {
+  min-width: 320px;
+}
+
+.auth-page form .form-text-small {
+  padding-top: 5px;
+}

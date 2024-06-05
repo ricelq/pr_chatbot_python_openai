@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Document</title>
+
+    {% block head %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/app.css') }}"
+    />
+    {% endblock %}
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    {% include '_navbar.html' %}
+
+    <div class="bg-gray-200">
+      <div
+        class="bg-red-100 border-red-400 text-red-700 px-4 py-3 rounded relative hidden"
+        id="messageContainer"
+      >
+        <strong class="font-bold">Error</strong>
+        <span class="block sm:inline" id="messageValue"></span>
+      </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="p-4">
+      {% for category, message in messages %}
+      <div
+        class="{{ 'bg-green-100 border-green-500 text-green-700' if category == 'Success' else 'bg-red-100 border-red-400 text-red-700' }} px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <strong class="font-bold"
+          >{{ 'Success!' if category == 'Success' else 'Error!' }}</strong
+        >
+        <span class="block sm:inline">{{ message }}</span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3 flash-close">
+          <svg
+            class="fill-current h-6 w-6 text-red-500"
+            role="button"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <title>Close</title>
+            <path
+              d="M14.348 14.849a1.2 1.2 0 1 1-1.697 1.697L10 13.414l-2.651 3.132a1.2 1.2 0 1 1-1.697-1.697L8.586 12 5.935 9.351a1.2 1.2 0 1 1 1.697-1.697L10 10.586l2.651-3.132a1.2 1.2 0 1 1 1.697 1.697L11.414 12l3.151 2.651zM10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"
+            />
+          </svg>
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+
+    <div>{% block content %}{% endblock %}</div>
+
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    {% endblock %}
+  </body>
+</html>

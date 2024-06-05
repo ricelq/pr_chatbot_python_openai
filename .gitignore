@@ -1,0 +1,8 @@
+.env
+.idea
+.DS_Store
+.ipynb_checkpoints
+_prodeimat
+jupyter
+.vscode
+__pycache__

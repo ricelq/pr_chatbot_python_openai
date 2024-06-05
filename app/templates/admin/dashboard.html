@@ -1,0 +1,82 @@
+{% extends './base.html' %} 
+
+{% block content %}
+<div class="admin-page bg-gray-200 dashboard-page flex items-center justify-center overflow-auto h-[calc(100vh-52px)]">
+  <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+    <h1 class="text-2xl font-bold text-center">Dashboard</h3>
+    
+      <ul class="container mx-auto divide-y divide-gray-400 divide-dotted" style="font-family: Raleway">
+
+        <li class="flex items-center justify-between p-4 m-4">
+          <div class="antialiased">
+            <div class="font-light text-3xl align-middle mb-2">External API</div>     
+            <div class="text-xs font-mono font-light text-gray-500 mt-2 mb-4">
+              <span>Fetch Articles from an external API and save in PostgreSQL database.</span>
+            </div> 
+              <ul class="list-outside list-disc">
+                <li>Total articles: {{articles_count}}</li>
+
+                
+                <li>Created at: 
+
+                {% if created_at %}
+                {{ created_at.strftime('%d-%m-%Y') }}
+            {% else %}
+                Not available
+            {% endif %}
+          </li>
+
+              </ul>
+          </div>
+          <div class="ml-8">
+            <a href="{{ url_for('admin.fetch_data') }}" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Fetch data
+            </a>
+          </div>
+
+        </li>  
+        <li class="flex items-center justify-between p-4 m-4">
+          <div class="antialiased">
+            <div class="font-light text-3xl align-middle mb-2">Export As JSON</div>     
+            <div class="text-xs font-mono font-light text-gray-500 mt-2 mb-4">
+              <span>Export Articles from the database in a JSON format.</span>
+            </div> 
+              <ul class="list-outside list-disc">
+                <li>Path of the last JSON exported: 
+                    {% if articles_json_path %}
+                        {{ articles_json_path }}
+                    {% else %}
+                        Not available
+                    {% endif %}
+                </li>
+
+              </ul>
+          </div>
+          <div class="ml-8">
+            <a href="{{ url_for('admin.export_articles_json') }}" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Export
+            </a>
+          </div>
+
+        </li>  
+
+        <li class="flex items-center justify-between p-4 m-4">
+          <div class="antialiased">
+            <div class="font-light text-3xl align-middle mb-2">Statistics</div>     
+            <div class="text-xs font-mono font-light text-gray-500 mt-2 mb-4">
+              <span>Swiss Foreign Trade Statistics.</span>
+            </div> 
+          </div>
+          <div class="ml-8">
+            <a href="{{ url_for('admin.statistics') }}" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Statistics
+            </a>
+          </div>
+
+        </li>  
+      </ul>
+
+      
+  </div>
+</div>
+{% endblock %}
