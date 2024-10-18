@@ -1,0 +1,63 @@
+version: "3"
+services:
+    flask:
+        build: .
+        ports:
+            - "5000:5000"
+        volumes:
+            - .:/app
+        env_file:
+            - .env
+        container_name: python_llm_flask
+        command:
+          [ "conda", "run", "-n", "nomades_project_llm_310", "python", "run.py" ]
+        depends_on:
+            - postgres
+            - pgadmin
+
+    jupyter:
+        build: .
+        ports:
+            - "8888:8888"
+        volumes:
+            - .:/app
+        environment:
+            - JUPYTER_ENABLE_LAB=yes
+        command:
+          [
+              "conda",
+              "run",
+              "-n",
+              "nomades_project_llm_310",
+              "jupyter",
+              "notebook",
+              "--ip=0.0.0.0",
+              "--no-browser",
+              "--allow-root",
+              "--port=8888",
+          ]
+        container_name: python_llm_jupyter
+
+    postgres:
+        image: postgres:13
+        restart: always
+        ports:
+            - "5432:5432"
+        env_file:
+            - .env
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        container_name: python_llm_postgress
+
+    pgadmin:
+        image: dpage/pgadmin4
+        restart: always
+        ports:
+            - "5050:80"
+        env_file:
+            - .env
+        depends_on:
+            - postgres
+
+volumes:
+    postgres_data:
